@@ -9,3 +9,8 @@ html, body {
 html, body, #root, #root>div {
   height: calc(100% - 21px);;
 }
+
+/* https://github.com/SamyPesse/react-mathjax/issues/21#issuecomment-997151469 */
+span.MathJax_Preview {
+  display: none;
+}
