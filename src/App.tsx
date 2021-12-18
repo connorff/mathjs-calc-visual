@@ -1,5 +1,7 @@
-import { Navbar, Container } from "react-bootstrap";
+import { Navbar, Container, Col, Row } from "react-bootstrap";
 import { Github, GraphUpArrow } from "react-bootstrap-icons";
+import Graph from "./graph/Graph";
+import Expressions from "./expression/Expressions";
 import { GITHUB_REPO, ICON_WIDTH, PROJECT_NAME } from "./utils/constants";
 
 function App() {
@@ -21,6 +23,16 @@ function App() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      <Container className="h-100">
+        <Row className="align-items-center h-100">
+          <Col sm={12} md={8}>
+            <Expressions />
+          </Col>
+          <Col sm={12} md={4}>
+            <Graph />
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 }
