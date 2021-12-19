@@ -11,6 +11,7 @@ import {
 import { MathNode, parse, derivative } from "mathjs";
 import { useState } from "react";
 import Visualize from "./visualize/Visualize";
+import "./App.css";
 
 function App() {
   const [expression, setExpression] = useState<string>("");
@@ -43,7 +44,7 @@ function App() {
         </Container>
       </Navbar>
       <Container className="h-100">
-        <Row className="align-items-center h-75">
+        <Row className="align-items-center mh-75 gy-4 mt-1 mt-md-0">
           <Col sm={12} md={8}>
             <Expressions
               fn={expression}
@@ -60,7 +61,7 @@ function App() {
             </Card>
           </Col>
         </Row>
-        <Row className="justify-content-center h-25">
+        <Row className="justify-content-center mh-25 mt-3 mt-md-0">
           <Col sm={12} md={10}>
             <Visualize />
           </Col>
