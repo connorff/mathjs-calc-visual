@@ -1,10 +1,23 @@
-import { Navbar, Container, Col, Row } from "react-bootstrap";
+import { Navbar, Container, Col, Row, Card } from "react-bootstrap";
 import { Github, GraphUpArrow } from "react-bootstrap-icons";
 import Graph from "./graph/Graph";
 import Expressions from "./expression/Expressions";
 import { GITHUB_REPO, ICON_WIDTH, PROJECT_NAME } from "./utils/constants";
+import { MathNode, parse, derivative } from "mathjs";
+import { useState } from "react";
 
 function App() {
+  const [expression, setExpression] = useState<string>("");
+  let [position, velocity, acceleration]: MathNode[] = Array(3).fill(parse(""));
+
+  try {
+    position = parse(expression);
+    velocity = derivative(position, "x");
+    acceleration = derivative(velocity, "x");
+  } catch {
+    // Leave expressions blank if invalid
+  }
+
   return (
     <>
       <Navbar bg="dark" variant="dark">
@@ -26,10 +39,19 @@ function App() {
       <Container className="h-100">
         <Row className="align-items-center h-100">
           <Col sm={12} md={8}>
-            <Expressions />
+            <Expressions
+              fn={expression}
+              setFn={setExpression}
+              position={position}
+              velocity={velocity}
+              acceleration={acceleration}
+            />
           </Col>
           <Col sm={12} md={4}>
-            <Graph />
+            <Card>
+              <Card.Header>Position function graph</Card.Header>
+              <Graph functions={[position]} />
+            </Card>
           </Col>
         </Row>
       </Container>

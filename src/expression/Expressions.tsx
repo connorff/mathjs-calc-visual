@@ -1,21 +1,24 @@
-import { useState } from "react";
+import { MathNode } from "mathjs";
 import { Card, Form, FormControl, InputGroup } from "react-bootstrap";
-import { parse, derivative, MathNode } from "mathjs";
 import MathJax from "react-mathjax";
 import Function from "./Function";
 
-export default function Expressions() {
-  const [expression, setExpression] = useState<string>("");
-  let [position, velocity, acceleration]: MathNode[] = Array(3).fill(parse(""));
+type ExpressionsProps = {
+  fn: string;
+  setFn: (arg0: string) => void;
 
-  try {
-    position = parse(expression);
-    velocity = derivative(position, "x");
-    acceleration = derivative(velocity, "x");
-  } catch {
-    // Leave expressions blank if invalid
-  }
+  position: MathNode;
+  velocity: MathNode;
+  acceleration: MathNode;
+};
 
+const Expressions: React.FC<ExpressionsProps> = ({
+  fn,
+  setFn,
+  position,
+  velocity,
+  acceleration,
+}) => {
   return (
     <Card>
       <MathJax.Provider>
@@ -27,16 +30,18 @@ export default function Expressions() {
             <FormControl
               placeholder="Position function"
               aria-label="Position function"
-              value={expression}
-              onChange={(ev) => setExpression(ev.target.value)}
+              value={fn}
+              onChange={(ev) => setFn(ev.target.value)}
             />
           </InputGroup>
 
-          <Function name="Position" fnName='f' fn={position} />
-          <Function name="Velocity" fnName='v' fn={velocity} />
-          <Function name="Acceleration" fnName='a' fn={acceleration} />
+          <Function name="Position" fnName="f" fn={position} />
+          <Function name="Velocity" fnName="v" fn={velocity} />
+          <Function name="Acceleration" fnName="a" fn={acceleration} />
         </Form>
       </MathJax.Provider>
     </Card>
   );
-}
+};
+
+export default Expressions;
