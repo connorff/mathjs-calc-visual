@@ -10,6 +10,7 @@ import {
 } from "./utils/constants";
 import { MathNode, parse, derivative } from "mathjs";
 import { useState } from "react";
+import Visualize from "./visualize/Visualize";
 
 function App() {
   const [expression, setExpression] = useState<string>("");
@@ -42,7 +43,7 @@ function App() {
         </Container>
       </Navbar>
       <Container className="h-100">
-        <Row className="align-items-center h-100">
+        <Row className="align-items-center h-75">
           <Col sm={12} md={8}>
             <Expressions
               fn={expression}
@@ -57,6 +58,11 @@ function App() {
               <Card.Header>Position function graph</Card.Header>
               <Graph functions={[position]} />
             </Card>
+          </Col>
+        </Row>
+        <Row className="justify-content-center h-25">
+          <Col sm={12} md={10}>
+            <Visualize />
           </Col>
         </Row>
       </Container>

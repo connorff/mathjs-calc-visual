@@ -10,3 +10,6 @@ export const GRAPH_HEIGHT = 250;
 export type AxisRange = [number, number];
 export const DEFAULT_RANGE: AxisRange = [0, 10];
 export const STEPS_PER_VIEW = 1000;
+export const STEP_DEC_PLACES = 3;
+
+export type VisualizerOptions = "values" | "velocity" | "acceleration";
