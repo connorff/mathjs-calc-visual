@@ -3,6 +3,8 @@ export const GITHUB_REPO = "https://github.com/connorff/mathjs-calc-visual";
 
 export const ICON_WIDTH = 30;
 
+export const INDEPENDENT_VAR = 't';
+
 export const GRAPH_HEIGHT = 250;
 
 export type AxisRange = [number, number];

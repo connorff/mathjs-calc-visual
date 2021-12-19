@@ -2,7 +2,12 @@ import { Navbar, Container, Col, Row, Card } from "react-bootstrap";
 import { Github, GraphUpArrow } from "react-bootstrap-icons";
 import Graph from "./graph/Graph";
 import Expressions from "./expression/Expressions";
-import { GITHUB_REPO, ICON_WIDTH, PROJECT_NAME } from "./utils/constants";
+import {
+  GITHUB_REPO,
+  ICON_WIDTH,
+  INDEPENDENT_VAR,
+  PROJECT_NAME,
+} from "./utils/constants";
 import { MathNode, parse, derivative } from "mathjs";
 import { useState } from "react";
 
@@ -12,8 +17,8 @@ function App() {
 
   try {
     position = parse(expression);
-    velocity = derivative(position, "x");
-    acceleration = derivative(velocity, "x");
+    velocity = derivative(position, INDEPENDENT_VAR);
+    acceleration = derivative(velocity, INDEPENDENT_VAR);
   } catch {
     // Leave expressions blank if invalid
   }

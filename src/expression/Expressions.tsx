@@ -1,6 +1,7 @@
 import { MathNode } from "mathjs";
 import { Card, Form, FormControl, InputGroup } from "react-bootstrap";
 import MathJax from "react-mathjax";
+import { INDEPENDENT_VAR } from "../utils/constants";
 import Function from "./Function";
 
 type ExpressionsProps = {
@@ -25,7 +26,7 @@ const Expressions: React.FC<ExpressionsProps> = ({
         <Form className="p-3">
           <InputGroup className="mb-5">
             <InputGroup.Text>
-              <MathJax.Node inline formula={"f (x)="} />
+              <MathJax.Node inline formula={`s (${INDEPENDENT_VAR})=`} />
             </InputGroup.Text>
             <FormControl
               placeholder="Position function"
@@ -35,7 +36,7 @@ const Expressions: React.FC<ExpressionsProps> = ({
             />
           </InputGroup>
 
-          <Function name="Position" fnName="f" fn={position} />
+          <Function name="Position" fnName="s" fn={position} />
           <Function name="Velocity" fnName="v" fn={velocity} />
           <Function name="Acceleration" fnName="a" fn={acceleration} />
         </Form>

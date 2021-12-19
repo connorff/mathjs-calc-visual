@@ -1,6 +1,7 @@
 import { MathNode } from "mathjs";
 import { Form, Row, Col } from "react-bootstrap";
 import MathJax from "react-mathjax";
+import { INDEPENDENT_VAR } from "../utils/constants";
 
 type FunctionProps = {
   name: string;
@@ -14,7 +15,10 @@ const Function: React.FC<FunctionProps> = ({ name, fnName, fn }) => (
       <b>{name} function</b>
     </Form.Label>
     <Col sm="8">
-      <MathJax.Node inline formula={`${fnName} (x)= ${fn.toTex()}`} />
+      <MathJax.Node
+        inline
+        formula={`${fnName} (${INDEPENDENT_VAR})= ${fn.toTex()}`}
+      />
     </Col>
   </Form.Group>
 );
