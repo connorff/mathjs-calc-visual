@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, Row, Col, Form } from "react-bootstrap";
+import { Pause, Play } from "react-bootstrap-icons";
 import MathJax from "react-mathjax";
 import {
   AxisRange,
@@ -12,13 +13,37 @@ import {
 const Visualize = () => {
   const [xRange] = useState<AxisRange>([...DEFAULT_RANGE]);
   const [x, setX] = useState<number>(DEFAULT_RANGE[0]);
-  const stepSize = (xRange[1] - xRange[0]) / STEPS_PER_VIEW;
+  const range = xRange[1] - xRange[0];
+  const stepSize = range / STEPS_PER_VIEW;
+
+  const [isRunning, setIsRunning] = useState(false);
 
   const [option, setOption] = useState<VisualizerOptions>("values");
 
   const handleSlide = (val: number) => {
     const rounded = +val.toFixed(STEP_DEC_PLACES);
     setX(rounded);
+  };
+
+  useEffect(() => {
+    if (isRunning) {
+      if (x >= xRange[1]) {
+        setIsRunning(false);
+      } else {
+        const step = stepSize * 10;
+
+        setTimeout(
+          () => setX(+(x + step).toFixed(STEP_DEC_PLACES)),
+          step * 1000
+        );
+      }
+    }
+  }, [x, isRunning, stepSize, xRange]);
+
+  const iconProps = {
+    size: 25,
+    style: { cursor: "pointer" },
+    onClick: () => setIsRunning(!isRunning),
   };
 
   return (
@@ -45,13 +70,20 @@ const Visualize = () => {
             <MathJax.Node inline formula={`s(t)`} /> at{" "}
             <MathJax.Node inline formula="t" /> = {x}
           </Form.Label>
-          <Form.Range
-            min={xRange[0]}
-            max={xRange[1]}
-            value={x}
-            onChange={(e) => handleSlide(+e.target.value)}
-            step={stepSize}
-          />
+          <Row>
+            <Col xs="auto">
+              {isRunning ? <Pause {...iconProps} /> : <Play {...iconProps} />}
+            </Col>
+            <Col>
+              <Form.Range
+                min={xRange[0]}
+                max={xRange[1]}
+                value={x}
+                onChange={(e) => handleSlide(+e.target.value)}
+                step={stepSize}
+              />
+            </Col>
+          </Row>
           <div className="text-secondary">
             Pan/Zoom the velocity or acceleration graph to change the bounds of{" "}
             <MathJax.Node inline formula="t" />
