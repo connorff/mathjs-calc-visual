@@ -10,6 +10,7 @@ import {
   STEP_DEC_PLACES,
   VisualizerOptions,
 } from "../utils/constants";
+import { VisualizeComponents } from "./utils";
 
 const round = (num: number) => +num.toFixed(STEP_DEC_PLACES);
 
@@ -52,6 +53,8 @@ const Visualize = () => {
     onClick: handleRunToggle,
   };
 
+  const BodyComponent = VisualizeComponents[option];
+
   return (
     <Card className="mb-5">
       <MathJax.Provider>
@@ -71,6 +74,9 @@ const Visualize = () => {
             </Col>
           </Row>
         </Card.Header>
+        <Card.Body>
+          <BodyComponent />
+        </Card.Body>
         <Card.Footer>
           <Form.Label>
             <MathJax.Node inline formula={`s(t)`} /> at{" "}
