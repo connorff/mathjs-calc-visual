@@ -18,7 +18,6 @@ export const FnContext = createContext<MathNode[]>([]);
 function App() {
   const [expression, setExpression] = useState<string>("");
   let [position, velocity, acceleration]: MathNode[] = Array(3).fill(parse(""));
-  const fns = [position, velocity, acceleration];
 
   try {
     position = parse(expression);
@@ -27,6 +26,8 @@ function App() {
   } catch {
     // Leave expressions blank if invalid
   }
+
+  const fns = [position, velocity, acceleration];
 
   return (
     <FnContext.Provider value={fns}>
