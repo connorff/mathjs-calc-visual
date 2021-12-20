@@ -9,13 +9,16 @@ import {
   PROJECT_NAME,
 } from "./utils/constants";
 import { MathNode, parse, derivative } from "mathjs";
-import { useState } from "react";
+import { createContext, useState } from "react";
 import Visualize from "./visualize/Visualize";
 import "./App.css";
+
+export const FnContext = createContext<MathNode[]>([]);
 
 function App() {
   const [expression, setExpression] = useState<string>("");
   let [position, velocity, acceleration]: MathNode[] = Array(3).fill(parse(""));
+  const fns = [position, velocity, acceleration];
 
   try {
     position = parse(expression);
@@ -26,7 +29,7 @@ function App() {
   }
 
   return (
-    <>
+    <FnContext.Provider value={fns}>
       <Navbar bg="dark" variant="dark">
         <Container>
           <Navbar.Brand>
@@ -46,13 +49,7 @@ function App() {
       <Container className="h-100">
         <Row className="align-items-center mh-75 gy-4 mt-1 mt-md-0">
           <Col sm={12} md={8}>
-            <Expressions
-              fn={expression}
-              setFn={setExpression}
-              position={position}
-              velocity={velocity}
-              acceleration={acceleration}
-            />
+            <Expressions fn={expression} setFn={setExpression} />
           </Col>
           <Col sm={12} md={4}>
             <Card>
@@ -67,7 +64,7 @@ function App() {
           </Col>
         </Row>
       </Container>
-    </>
+    </FnContext.Provider>
   );
 }
 

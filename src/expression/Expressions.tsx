@@ -1,25 +1,18 @@
-import { MathNode } from "mathjs";
+import { useContext } from "react";
 import { Card, Form, FormControl, InputGroup } from "react-bootstrap";
 import MathJax from "react-mathjax";
+import { FnContext } from "../App";
 import { INDEPENDENT_VAR } from "../utils/constants";
 import Function from "./Function";
 
 type ExpressionsProps = {
   fn: string;
   setFn: (arg0: string) => void;
-
-  position: MathNode;
-  velocity: MathNode;
-  acceleration: MathNode;
 };
 
-const Expressions: React.FC<ExpressionsProps> = ({
-  fn,
-  setFn,
-  position,
-  velocity,
-  acceleration,
-}) => {
+const Expressions: React.FC<ExpressionsProps> = ({ fn, setFn }) => {
+  const [position, velocity, acceleration] = useContext(FnContext);
+
   return (
     <Card>
       <MathJax.Provider>
