@@ -5,24 +5,33 @@ import MathJax from "react-mathjax";
 import {
   AxisRange,
   DEFAULT_RANGE,
+  RUNNING_STEPS_PER_VIEW,
   STEPS_PER_VIEW,
   STEP_DEC_PLACES,
   VisualizerOptions,
 } from "../utils/constants";
 
+const round = (num: number) => +num.toFixed(STEP_DEC_PLACES);
+
 const Visualize = () => {
   const [xRange] = useState<AxisRange>([...DEFAULT_RANGE]);
   const [x, setX] = useState<number>(DEFAULT_RANGE[0]);
+  const [isRunning, setIsRunning] = useState(false);
+  const [option, setOption] = useState<VisualizerOptions>("values");
+
   const range = xRange[1] - xRange[0];
   const stepSize = range / STEPS_PER_VIEW;
 
-  const [isRunning, setIsRunning] = useState(false);
+  const handleSlide = (val: number) => setX(round(val));
 
-  const [option, setOption] = useState<VisualizerOptions>("values");
+  const handleRunToggle = () => {
+    if (x >= xRange[1]) {
+      setX(xRange[0]);
+    } else {
+      setX(+x.toFixed(STEP_DEC_PLACES - 2));
+    }
 
-  const handleSlide = (val: number) => {
-    const rounded = +val.toFixed(STEP_DEC_PLACES);
-    setX(rounded);
+    setIsRunning(!isRunning);
   };
 
   useEffect(() => {
@@ -30,12 +39,9 @@ const Visualize = () => {
       if (x >= xRange[1]) {
         setIsRunning(false);
       } else {
-        const step = stepSize * 10;
+        const step = stepSize * RUNNING_STEPS_PER_VIEW;
 
-        setTimeout(
-          () => setX(+(x + step).toFixed(STEP_DEC_PLACES)),
-          step * 1000
-        );
+        setTimeout(() => setX(round(x + step)), step * 1000);
       }
     }
   }, [x, isRunning, stepSize, xRange]);
@@ -43,7 +49,7 @@ const Visualize = () => {
   const iconProps = {
     size: 25,
     style: { cursor: "pointer" },
-    onClick: () => setIsRunning(!isRunning),
+    onClick: handleRunToggle,
   };
 
   return (
