@@ -14,3 +14,4 @@ export const STEP_DEC_PLACES = 3;
 export const RUNNING_STEPS_PER_VIEW = 10;
 
 export type VisualizerOptions = "values" | "velocity" | "acceleration";
+export type FunctionType = "position" | "velocity" | "acceleration";

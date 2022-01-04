@@ -75,7 +75,7 @@ const Visualize = () => {
           </Row>
         </Card.Header>
         <Card.Body>
-          <BodyComponent />
+          <BodyComponent t={x} />
         </Card.Body>
         <Card.Footer>
           <Form.Label>
