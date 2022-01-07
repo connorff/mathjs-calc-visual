@@ -5,7 +5,6 @@ import MathJax from "react-mathjax";
 import {
   AxisRange,
   DEFAULT_RANGE,
-  RUNNING_STEPS_PER_VIEW,
   STEPS_PER_VIEW,
   STEP_DEC_PLACES,
   VisualizerOptions,
@@ -15,7 +14,7 @@ import { VisualizeComponents } from "./utils";
 const round = (num: number) => +num.toFixed(STEP_DEC_PLACES);
 
 const Visualize = () => {
-  const [xRange] = useState<AxisRange>([...DEFAULT_RANGE]);
+  const [xRange, setXRange] = useState<AxisRange>([...DEFAULT_RANGE]);
   const [x, setX] = useState<number>(DEFAULT_RANGE[0]);
   const [isRunning, setIsRunning] = useState(false);
   const [option, setOption] = useState<VisualizerOptions>("values");
@@ -40,7 +39,7 @@ const Visualize = () => {
       if (x >= xRange[1]) {
         setIsRunning(false);
       } else {
-        const step = stepSize * RUNNING_STEPS_PER_VIEW;
+        const step = 0.1;
 
         setTimeout(() => setX(round(x + step)), step * 1000);
       }
@@ -75,7 +74,7 @@ const Visualize = () => {
           </Row>
         </Card.Header>
         <Card.Body>
-          <BodyComponent t={x} />
+          <BodyComponent t={x} setXRange={setXRange} />
         </Card.Body>
         <Card.Footer>
           <Form.Label>
