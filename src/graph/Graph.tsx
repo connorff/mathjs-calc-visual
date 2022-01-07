@@ -6,9 +6,11 @@ import { getY } from "./utils";
 
 type GraphProps = {
   functions: MathNode[];
+  point?: [number, number];
+  onRangeChange?: (arg0: [AxisRange, AxisRange]) => void;
 };
 
-const Graph: React.FC<GraphProps> = ({ functions }) => {
+const Graph: React.FC<GraphProps> = ({ functions, point, onRangeChange }) => {
   const [xRange, setXRanges] = useState<AxisRange>(DEFAULT_RANGE);
   const [yRange, setYRanges] = useState<AxisRange>(DEFAULT_RANGE);
 
@@ -20,6 +22,14 @@ const Graph: React.FC<GraphProps> = ({ functions }) => {
     y: xValues.map((x) => getY(f, x as number)),
     type: "line",
   }));
+
+  if (point) {
+    data.push({
+      x: [point[0]],
+      y: [point[1]],
+      type: 'scatter'
+    });
+  };
 
   return (
     <Plot
@@ -59,8 +69,12 @@ const Graph: React.FC<GraphProps> = ({ functions }) => {
         "yaxis.range[0]": ymin,
         "yaxis.range[1]": ymax,
       }) => {
-        if (xmin && xmax) setXRanges([xmin, xmax]);
-        if (ymin && ymax) setYRanges([ymin, ymax]);
+        const xRange = [xmin, xmax] as AxisRange;
+        const yRange = [ymin, ymax] as AxisRange;
+        if (xmin && xmax) setXRanges(xRange);
+        if (ymin && ymax) setYRanges(yRange);
+
+        if (onRangeChange) onRangeChange([xRange, yRange]);
       }}
     />
   );

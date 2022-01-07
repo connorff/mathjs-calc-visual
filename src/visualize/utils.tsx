@@ -1,9 +1,11 @@
 import React from "react";
-import { FunctionType, VisualizerOptions } from "../utils/constants";
+import { AxisRange, FunctionType, VisualizerOptions } from "../utils/constants";
 import Values from "./Values";
+import Velocity from "./Velocity";
 
 export type VisComponentProps = {
   t: number;
+  setXRange: (arg0: AxisRange) => void;
 };
 
 export const VisualizeComponents: Record<
@@ -11,7 +13,7 @@ export const VisualizeComponents: Record<
   React.FC<VisComponentProps>
 > = {
   values: Values,
-  velocity: () => <div>Velocity</div>,
+  velocity: Velocity,
   acceleration: () => <div>Acceleration</div>,
 };
 
