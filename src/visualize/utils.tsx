@@ -1,5 +1,6 @@
 import React from "react";
 import { AxisRange, FunctionType, VisualizerOptions } from "../utils/constants";
+import Acceleration from "./Acceleration";
 import Values from "./Values";
 import Velocity from "./Velocity";
 
@@ -14,7 +15,7 @@ export const VisualizeComponents: Record<
 > = {
   values: Values,
   velocity: Velocity,
-  acceleration: () => <div>Acceleration</div>,
+  acceleration: Acceleration,
 };
 
 type Sign = "positive" | "negative" | "0";
